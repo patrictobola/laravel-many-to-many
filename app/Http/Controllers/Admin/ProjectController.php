@@ -87,7 +87,9 @@ class ProjectController extends Controller
     {
         $types = Type::all();
         $technologies = Technology::all();
-        return view('admin.edit', compact('project', 'types', 'technologies'));
+        $project_tech_ids = $project->technologies->pluck('id')->toArray();
+
+        return view('admin.edit', compact('project', 'types', 'technologies', 'project_tech_ids'));
     }
 
     /**
