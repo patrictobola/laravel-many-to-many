@@ -14,14 +14,15 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($types as $type)
+                @foreach ($technologies as $technology)
                     <tr>
-                        <th>{{ $type->label }}</th>
-                        <td>{{ $type->color }}</td>
+                        <th>{{ $technology->label }}</th>
+                        <td>{{ $technology->color }}</td>
                         <td>
                             <div class="d-flex justify-content-end">
-                                <a class="btn btn-warning me-2" href="{{ route('admin.types.edit', $type) }}">Edit</a>
-                                <form action="{{ route('admin.types.destroy', $type) }}" method="POST">
+                                <a class="btn btn-warning me-2"
+                                    href="{{ route('admin.technologies.edit', $technology) }}">Edit</a>
+                                <form action="{{ route('admin.types.destroy', $technology) }}" method="POST">
                                     @csrf
                                     @method('delete')
                                     <button class="btn btn-danger">Delete</button>

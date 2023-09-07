@@ -14,10 +14,9 @@ class TypeController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    { {
-            $types = Type::all();
-            return view('admin.types.index', compact('types'));
-        }
+    {
+        $types = Type::all();
+        return view('admin.types.index', compact('types'));
     }
 
     /**
