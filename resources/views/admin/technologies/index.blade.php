@@ -33,7 +33,7 @@
                 @endforeach
             </tbody>
         </table>
-        <a class="btn btn-primary" href="{{ route('admin.types.create') }}">Create a new type</a>
+        <a class="btn btn-primary" href="{{ route('admin.technologies.create') }}">Create a new technology</a>
 
     </div>
 @endsection

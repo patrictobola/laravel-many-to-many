@@ -22,7 +22,8 @@ class TechnologyController extends Controller
      */
     public function create()
     {
-        //
+        $technology = [];
+        return view('admin.technologies.create', compact('technology'));
     }
 
     /**
@@ -30,7 +31,20 @@ class TechnologyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(
+            [
+                'label' => 'bail|required|string|max:255',
+                'color' => 'bail|required',
+            ],
+            []
+        );
+
+        $data = $request->all();
+        $new_technology = new Technology();
+        $new_technology->fill($data);
+        $new_technology->save();
+
+        return to_route('admin.technologies.index');
     }
 
     /**
@@ -46,7 +60,7 @@ class TechnologyController extends Controller
      */
     public function edit(Technology $technology)
     {
-        //
+        return view('admin.technologies.edit', compact('technology'));
     }
 
     /**
