@@ -17,7 +17,10 @@
                 @foreach ($technologies as $technology)
                     <tr>
                         <th>{{ $technology->label }}</th>
-                        <td>{{ $technology->color }}</td>
+                        <td>
+                            <span class="badge rounded-pill" style="background-color:{{ $technology->color }}">Color
+                                TEST</span>
+                        </td>
                         <td>
                             <div class="d-flex justify-content-end">
                                 <a class="btn btn-warning me-2"
