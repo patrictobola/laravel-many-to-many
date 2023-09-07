@@ -27,7 +27,9 @@
                         @endif
                         <td>
                             @if ($project->type)
-                                {{ $project->type?->label }}
+                                <span class="badge rounded-pill" style="background-color:{{ $project->type?->color }}">
+                                    {{ $project->type?->label }}
+                                </span>
                             @else
                                 -
                             @endif
@@ -35,7 +37,8 @@
                         <td>
                             @if (count($project->technologies))
                                 @foreach ($project->technologies as $tech)
-                                    {{ $tech->label }}
+                                    <span class="badge rounded-pill" style="background-color:{{ $tech?->color }}">
+                                        {{ $tech->label }}</span>
                                 @endforeach
                             @else
                                 -
@@ -45,7 +48,8 @@
                         <td>
                             <div class="d-flex justify-content-end">
                                 <a class="btn btn-success me-2" href="{{ route('admin.projects.show', $project) }}">Show</a>
-                                <a class="btn btn-warning me-2" href="{{ route('admin.projects.edit', $project) }}">Edit</a>
+                                <a class="btn btn-warning me-2"
+                                    href="{{ route('admin.projects.edit', $project) }}">Edit</a>
                                 <form action="{{ route('admin.projects.destroy', $project) }}" method="POST">
                                     @csrf
                                     @method('delete')
