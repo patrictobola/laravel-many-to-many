@@ -17,7 +17,8 @@
                 @foreach ($types as $type)
                     <tr>
                         <th>{{ $type->label }}</th>
-                        <td>{{ $type->color }}</td>
+                        <td><span class="badge rounded-pill" style="background-color:{{ $type->color }}">Color
+                                TEST</span></td>
                         <td>
                             <div class="d-flex justify-content-end">
                                 <a class="btn btn-warning me-2" href="{{ route('admin.types.edit', $type) }}">Edit</a>
