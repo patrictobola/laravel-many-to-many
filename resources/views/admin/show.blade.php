@@ -20,11 +20,20 @@
                 <tr>
                     <th>{{ $project->title }}</th>
                     <td>{{ substr($project->description, 0, 50) . '...' }}</td>
-                    <td>{{ $project->type?->label }}</td>
+                    <td>
+                        @if ($project->type)
+                            <span class="badge rounded-pill" style="background-color:{{ $project->type?->color }}">
+                                {{ $project->type?->label }}
+                            </span>
+                        @else
+                            -
+                        @endif
+                    </td>
                     <td>
                         @if (count($project->technologies))
                             @foreach ($project->technologies as $tech)
-                                {{ $tech->label }}
+                                <span class="badge rounded-pill" style="background-color:{{ $tech?->color }}">
+                                    {{ $tech->label }}</span>
                             @endforeach
                         @else
                             -
