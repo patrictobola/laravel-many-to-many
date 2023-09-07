@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\Technology;
 use App\Models\Type as Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
@@ -28,7 +30,8 @@ class ProjectController extends Controller
     {
         $project = new Project();
         $types = Type::all();
-        return view('admin.create', compact('project', 'types'));
+        $technologies = Technology::all();
+        return view('admin.create', compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -41,7 +44,6 @@ class ProjectController extends Controller
                 'title' => 'bail|required|string|max:255',
                 'description' => 'bail|required|string',
                 'date' => 'bail|required|date',
-                'thumb' => 'bail|required'
             ],
             [
                 'title.max' => 'The title must be shorter than 255 characters.',
@@ -61,6 +63,11 @@ class ProjectController extends Controller
         $new_project->fill($data);
         $new_project->save();
 
+        // Store in many to many table 
+        if (array_key_exists('technologies', $data)) {
+            $new_project->technologies()->attach($data['technologies']);
+        }
+
         return to_route('admin.projects.index');
     }
 
@@ -79,7 +86,10 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
-        return view('admin.edit', compact('project', 'types'));
+        $technologies = Technology::all();
+        $project_tech_ids = $project->technologies->pluck('id')->toArray();
+
+        return view('admin.edit', compact('project', 'types', 'technologies', 'project_tech_ids'));
     }
 
     /**
@@ -92,7 +102,6 @@ class ProjectController extends Controller
                 'title' => 'bail|required|string|max:255',
                 'description' => 'bail|required|string',
                 'date' => 'bail|required|date',
-                'thumb' => 'bail|required',
                 'type_id' => 'nullable'
             ],
             [
@@ -109,6 +118,11 @@ class ProjectController extends Controller
             $data['thumb'] = $image;
         };
         $project->update($data);
+
+        // Update in many to many table 
+        if (!Arr::exists($data, 'technologies') && count($project->technologies)) $project->technologies()->detach();
+        elseif (Arr::exists($data, 'technologies')) $project->technologies()->sync($data['technologies']);
+
         return to_route('admin.projects.index', $project);
     }
 

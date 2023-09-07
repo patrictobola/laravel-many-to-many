@@ -11,6 +11,7 @@
                     <th scope="col">Title</th>
                     <th scope="col">Description</th>
                     <th scope="col">Type</th>
+                    <th scope="col">Technologies</th>
                     <th scope="col">Date of creation</th>
                     <th scope="col"></th>
                 </tr>
@@ -20,11 +21,26 @@
                     <tr>
                         <th>{{ $project->title }}</th>
                         @if (strlen($project->description) > 30)
-                            <td>{{ substr($project->description, 0, 50) . '...' }}</td>
+                            <td>{{ substr($project->description, 0, 30) . '...' }}</td>
                         @else
                             <td>{{ $project->description }}</td>
                         @endif
-                        <td>{{ $project->type?->label }}</td>
+                        <td>
+                            @if ($project->type)
+                                {{ $project->type?->label }}
+                            @else
+                                -
+                            @endif
+                        </td>
+                        <td>
+                            @if (count($project->technologies))
+                                @foreach ($project->technologies as $tech)
+                                    {{ $tech->label }}
+                                @endforeach
+                            @else
+                                -
+                            @endif
+                        </td>
                         <td>{{ $project->date }}</td>
                         <td>
                             <div class="d-flex justify-content-end">
@@ -41,7 +57,7 @@
                 @endforeach
             </tbody>
         </table>
-        <a class="btn btn-primary" href="{{ route('admin.projects.create') }}">Create a new project</a>
+        <a class="btn btn-primary mb-5" href="{{ route('admin.projects.create') }}">Create a new project</a>
 
     </div>
 @endsection
