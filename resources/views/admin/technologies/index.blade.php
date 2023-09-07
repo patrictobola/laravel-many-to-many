@@ -22,7 +22,7 @@
                             <div class="d-flex justify-content-end">
                                 <a class="btn btn-warning me-2"
                                     href="{{ route('admin.technologies.edit', $technology) }}">Edit</a>
-                                <form action="{{ route('admin.types.destroy', $technology) }}" method="POST">
+                                <form action="{{ route('admin.technologies.destroy', $technology) }}" method="POST">
                                     @csrf
                                     @method('delete')
                                     <button class="btn btn-danger">Delete</button>
