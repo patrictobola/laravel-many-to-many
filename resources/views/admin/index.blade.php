@@ -25,11 +25,21 @@
                         @else
                             <td>{{ $project->description }}</td>
                         @endif
-                        <td>{{ $project->type?->label }}</td>
                         <td>
-                            @foreach ($project->technologies as $tech)
-                                {{ $tech->label }}
-                            @endforeach
+                            @if ($project->type)
+                                {{ $project->type?->label }}
+                            @else
+                                -
+                            @endif
+                        </td>
+                        <td>
+                            @if (count($project->technologies))
+                                @foreach ($project->technologies as $tech)
+                                    {{ $tech->label }}
+                                @endforeach
+                            @else
+                                -
+                            @endif
                         </td>
                         <td>{{ $project->date }}</td>
                         <td>
