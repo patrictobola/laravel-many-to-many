@@ -62,6 +62,11 @@ class ProjectController extends Controller
         $new_project->fill($data);
         $new_project->save();
 
+        // Store in many to many table 
+        if (array_key_exists('technologies', $data)) {
+            $new_project->technologies()->attach($data['technologies']);
+        }
+
         return to_route('admin.projects.index');
     }
 
@@ -80,7 +85,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
-        return view('admin.edit', compact('project', 'types'));
+        $technologies = Technology::all();
+        return view('admin.edit', compact('project', 'types', 'technologies'));
     }
 
     /**
