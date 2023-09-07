@@ -17,10 +17,10 @@ class TypeSeeder extends Seeder
     {
         $types = ['Front-end', 'Back-End', 'FullStack', 'Web-Designer', 'On-Going Project', 'Analyst'];
         foreach ($types as $type) {
-            $project = new Type();
-            $project->label = $type;
-            $project->color = $faker->hexColor();
-            $project->save();
+            $new_type = new Type();
+            $new_type->label = $type;
+            $new_type->color = $faker->hexColor();
+            $new_type->save();
         }
     }
 }
